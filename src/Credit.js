@@ -14,19 +14,7 @@ import Link from '@mui/material/Link';
 import GlobalStyles from '@mui/material/GlobalStyles';
 import Container from '@mui/material/Container';
 import ButtonBase from '@mui/material/ButtonBase';
-
-function Copyright(props) {
-  return (
-    <Typography variant="body2" color="text.secondary" align="center" {...props}>
-      {'Copyright © '}
-      <Link color="inherit" href="https://mui.com/">
-        Your Website
-      </Link>{' '}
-      {new Date().getFullYear()}
-      {'.'}
-    </Typography>
-  );
-}
+import { useNavigate } from 'react-router-dom';
 
 // Updated tiers array
 const tiers = [
@@ -60,6 +48,14 @@ const tiers = [
 const defaultTheme = createTheme();
 
 function Credit() {
+  const navigate = useNavigate(); 
+
+  const handleCardClick = (title) => {
+    if (title === 'Use Credit') {
+      navigate('/transaction'); // <-- Route to transaction page for 'Use Credit'
+    }
+    // You can add more routing logic for other cards here if needed
+  };
   return (
     <ThemeProvider theme={defaultTheme}>
       <GlobalStyles styles={{ ul: { margin: 0, padding: 0, listStyle: 'none' } }} />
@@ -91,7 +87,7 @@ function Credit() {
         <Grid container spacing={5} alignItems="flex-end" justifyContent="center">
           {tiers.map((tier) => (
             <Grid item key={tier.title} xs={12} sm={6} md={4}>
-              <ButtonBase style={{ width: '100%' }}>  {/* <-- Wrap the Card with ButtonBase */}
+              <ButtonBase style={{ width: '100%' }} onClick={() => handleCardClick(tier.title)}>  {/* <-- Wrap the Card with ButtonBase */}
                 <Card>
                   <CardHeader
                     title={tier.title}
